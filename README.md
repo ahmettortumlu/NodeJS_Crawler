@@ -2,11 +2,11 @@
 
 With this project i have different tasks.
 
-# 1. Crawl all one specific domains urls.
+ 1. Crawl all one specific domains urls.
 
-# 2. Find IoT words from this urls.
+ 2. Find IoT words from this urls.
 
-# 3. Render this url with highlighting "IoT" words.
+ 3. Render this url with highlighting "IoT" words.
 
 
 I crawled a one domain's different urls, and i found urls which include "IoT" word then rendered scraped page as highlighted to this word.
