@@ -21,17 +21,20 @@ pagesToVisit.push(START_URL);
 crawl();
 
 function crawl() {
+
   const userAgent = ua.random();
   global.navigator = require('web-midi-api');
   navigator.__defineGetter__('userAgent', function () {
     return ua.random();
   });
+
   if(numPagesVisited >= MAX_PAGES_TO_VISIT) {
-    console.log("Pages which include 'IoT' word:" + iot_pages);
     console.log("Reached max limit of number of pages to visit.");
     return;
   }
+
   var nextPage = pagesToVisit.pop();
+  //if pagesToVisit empty array nextPage will be undefined, so this means all urls crawled
   if (nextPage == undefined){
    console.log("PROCESS FINISHED! FOUND: "+ten_times+", PAGES THAT CONTAIN THE WORD “IoT” AND THIS PAGE(S): "+ iot_pages);
    console.log("Crawled :"+ numPagesVisited + " pages")
@@ -43,7 +46,6 @@ function crawl() {
     crawl();
   } else {
     // New page we haven't visited
-    //var nextPage = "https://www.chevron.com/stories/chevron-partners-with-microsoft"
     visitPage(nextPage, crawl);
   }
 }
@@ -82,8 +84,8 @@ function visitPage(url, callback) {
 }
 
 function searchForWord($, word) {
-  var bodyText = $('html > body').text();//.toLowerCase()
-  return(bodyText.indexOf(word) !== -1);//.toLowerCase()
+  var bodyText = $('html > body').text();
+  return(bodyText.indexOf(word) !== -1);
 }
 
 function collectInternalLinks($) {
@@ -99,7 +101,7 @@ function render(url) {
     html = request(url, function(error, response, html) {  
     html = html.replace(/IoT/g,'<mark>IoT</mark>')
     fs.writeFile('iot.html', html, function (err){ if (err) throw err; console.log('New HTML file is created successfully.');
-
+    //rendering process
     var server = http.createServer(function (req, res){
       res.writeHead(200, {"Content-Type": "text/html"});
       var myReadStream = fs.createReadStream(__dirname + "/iot.html", "utf8");
